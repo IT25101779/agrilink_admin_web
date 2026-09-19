@@ -1,0 +1,13 @@
+# Ignore heavy package dependencies
+node_modules/
+
+# Ignore local Vercel deployment logs and cache
+.vercel/
+
+# Ignore production builds if you generate them locally
+dist/
+build/
+
+# Ignore potential future environment secrets
+.env
+.env*.local
