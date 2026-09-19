@@ -19,11 +19,11 @@ function authHeaders(token) {
 }
 
 export const api = {
-  async register({ fullName, email, phone, password, adminCode }) {
+  async register({ fullName, email, phone, password }) {
     const response = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fullName, email, phone, password, adminCode, role: "admin" }),
+      body: JSON.stringify({ fullName, email, phone, password, role: "admin" }),
     });
     return handleResponse(response);
   },
@@ -39,6 +39,16 @@ export const api = {
 
   async getMetrics(token) {
     const response = await fetch(`${BASE_URL}/admin/metrics`, { headers: authHeaders(token) });
+    return handleResponse(response);
+  },
+
+  async getImpact(token) {
+    const response = await fetch(`${BASE_URL}/admin/impact`, { headers: authHeaders(token) });
+    return handleResponse(response);
+  },
+
+  async getMarketHeatmap(token) {
+    const response = await fetch(`${BASE_URL}/admin/market-heatmap`, { headers: authHeaders(token) });
     return handleResponse(response);
   },
 

@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { LayoutDashboard, Receipt, Megaphone, LogOut, Sprout, Store, Handshake } from "lucide-react";
+import { LayoutDashboard, Receipt, Megaphone, LogOut, Sprout, Store, Handshake, TrendingUp, Flame } from "lucide-react";
 import { auth } from "../services/auth.js";
 
 const TABS = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
+  { id: "impact", label: "Impact", icon: TrendingUp },
+  { id: "heatmap", label: "Market Heatmap", icon: Flame },
   { id: "marketplace", label: "Marketplace Oversight", icon: Receipt },
   { id: "suppliers", label: "Supplier Directory", icon: Store },
   { id: "community", label: "Rentals & Seeds", icon: Handshake },

@@ -7,12 +7,16 @@ import MarketplaceOversightTab from "./MarketplaceOversightTab.jsx";
 import SupplierManagementTab from "./SupplierManagementTab.jsx";
 import CommunityListingsTab from "./CommunityListingsTab.jsx";
 import AdSchedulerTab from "./AdSchedulerTab.jsx";
+import ImpactTab from "./ImpactTab.jsx";
+import HeatmapTab from "./HeatmapTab.jsx";
 import { api } from "../services/api.js";
 import { auth } from "../services/auth.js";
 import { pageTransition } from "../motion/variants.js";
 
 const TAB_TITLES = {
   overview: "Platform Overview",
+  impact: "Impact Dashboard",
+  heatmap: "Market Heatmap",
   marketplace: "Marketplace Oversight",
   suppliers: "Supplier Directory",
   community: "Rentals & Seeds",
@@ -58,6 +62,8 @@ export default function CommandCenterPage() {
               ) : (
                 <OverviewTab metrics={metrics} />
               ))}
+            {activeTab === "impact" && <ImpactTab />}
+            {activeTab === "heatmap" && <HeatmapTab />}
             {activeTab === "marketplace" && <MarketplaceOversightTab />}
             {activeTab === "suppliers" && <SupplierManagementTab />}
             {activeTab === "community" && <CommunityListingsTab />}
