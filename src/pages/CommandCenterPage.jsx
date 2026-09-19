@@ -9,6 +9,7 @@ import CommunityListingsTab from "./CommunityListingsTab.jsx";
 import AdSchedulerTab from "./AdSchedulerTab.jsx";
 import ImpactTab from "./ImpactTab.jsx";
 import HeatmapTab from "./HeatmapTab.jsx";
+import ChatModerationTab from "./ChatModerationTab.jsx";
 import { api } from "../services/api.js";
 import { auth } from "../services/auth.js";
 import { pageTransition } from "../motion/variants.js";
@@ -17,6 +18,7 @@ const TAB_TITLES = {
   overview: "Platform Overview",
   impact: "Impact Dashboard",
   heatmap: "Market Heatmap",
+  chat: "Chat Moderation",
   marketplace: "Marketplace Oversight",
   suppliers: "Supplier Directory",
   community: "Rentals & Seeds",
@@ -48,10 +50,10 @@ export default function CommandCenterPage() {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col lg:flex-row min-h-screen">
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
 
-      <main className="flex-1 p-8">
+      <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
         <h2 className="font-display text-2xl font-semibold text-ink-900 mb-6">{TAB_TITLES[activeTab]}</h2>
 
         <AnimatePresence mode="wait">
@@ -64,6 +66,7 @@ export default function CommandCenterPage() {
               ))}
             {activeTab === "impact" && <ImpactTab />}
             {activeTab === "heatmap" && <HeatmapTab />}
+            {activeTab === "chat" && <ChatModerationTab />}
             {activeTab === "marketplace" && <MarketplaceOversightTab />}
             {activeTab === "suppliers" && <SupplierManagementTab />}
             {activeTab === "community" && <CommunityListingsTab />}

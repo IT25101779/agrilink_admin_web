@@ -47,6 +47,51 @@ export const api = {
     return handleResponse(response);
   },
 
+  // ---- Group-chat moderation (admin only) ----
+  async getChatStats(token) {
+    const response = await fetch(`${BASE_URL}/admin/chat/stats`, { headers: authHeaders(token) });
+    return handleResponse(response);
+  },
+
+  async getChatReports(token, status = "open") {
+    const response = await fetch(`${BASE_URL}/admin/chat/reports?status=${status}`, { headers: authHeaders(token) });
+    return handleResponse(response);
+  },
+
+  async removeChatMessage(token, messageId, reason = "removed_by_admin") {
+    const response = await fetch(`${BASE_URL}/admin/chat/messages/remove`, {
+      method: "POST",
+      headers: { ...authHeaders(token), "Content-Type": "application/json" },
+      body: JSON.stringify({ messageId, reason }),
+    });
+    return handleResponse(response);
+  },
+
+  async restoreChatMessage(token, messageId) {
+    const response = await fetch(`${BASE_URL}/admin/chat/messages/restore`, {
+      method: "POST",
+      headers: { ...authHeaders(token), "Content-Type": "application/json" },
+      body: JSON.stringify({ messageId }),
+    });
+    return handleResponse(response);
+  },
+
+  async banChatUser(token, userId, days, unban = false) {
+    const response = await fetch(`${BASE_URL}/admin/chat/ban`, {
+      method: "POST",
+      headers: { ...authHeaders(token), "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, days, unban }),
+    });
+    return handleResponse(response);
+  },
+
+  /** Photos are private, so they are fetched with the admin token and shown from a temporary local URL. */
+  async fetchChatMedia(token, mediaId) {
+    const response = await fetch(`${BASE_URL}/admin/chat/media/${mediaId}`, { headers: authHeaders(token) });
+    if (!response.ok) return null;
+    return URL.createObjectURL(await response.blob());
+  },
+
   async getMarketHeatmap(token) {
     const response = await fetch(`${BASE_URL}/admin/market-heatmap`, { headers: authHeaders(token) });
     return handleResponse(response);
