@@ -180,6 +180,40 @@ export const api = {
     return handleResponse(response);
   },
 
+  // ---- Surveys ----
+  async getSurveys(token) {
+    return handleResponse(await fetch(`${BASE_URL}/admin/surveys`, { headers: authHeaders(token) }));
+  },
+  async createSurvey(token, survey) {
+    return handleResponse(await fetch(`${BASE_URL}/admin/surveys`, { method: "POST", headers: authHeaders(token), body: JSON.stringify(survey) }));
+  },
+  async setSurveyActive(token, id, isActive) {
+    return handleResponse(await fetch(`${BASE_URL}/admin/surveys/${id}`, { method: "PATCH", headers: authHeaders(token), body: JSON.stringify({ isActive }) }));
+  },
+  async getSurveyResults(token, id) {
+    return handleResponse(await fetch(`${BASE_URL}/admin/surveys/${id}/results`, { headers: authHeaders(token) }));
+  },
+  // Downloads the answers as a CSV file (the browser needs the login header, so it can't be a plain link).
+  async downloadSurveyCsv(token, id, title) {
+    const response = await fetch(`${BASE_URL}/admin/surveys/${id}/export`, { headers: authHeaders(token) });
+    if (!response.ok) return { success: false, message: "Could not export the survey." };
+    const url = URL.createObjectURL(await response.blob());
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${(title || "survey").replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    return { success: true };
+  },
+
+  // ---- Market prices ----
+  async getPriceBoard(token, market) {
+    return handleResponse(await fetch(`${BASE_URL}/prices/board?market=${encodeURIComponent(market)}`, { headers: authHeaders(token) }));
+  },
+  async publishPrices(token, market, prices) {
+    return handleResponse(await fetch(`${BASE_URL}/admin/prices`, { method: "POST", headers: authHeaders(token), body: JSON.stringify({ market, prices }) }));
+  },
+
   async adminDeleteCommunityListing(token, id) {
     const response = await fetch(`${BASE_URL}/community-listings/${id}/admin`, {
       method: "DELETE",

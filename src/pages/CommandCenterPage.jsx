@@ -10,6 +10,8 @@ import AdSchedulerTab from "./AdSchedulerTab.jsx";
 import ImpactTab from "./ImpactTab.jsx";
 import HeatmapTab from "./HeatmapTab.jsx";
 import ChatModerationTab from "./ChatModerationTab.jsx";
+import PricesTab from "./PricesTab.jsx";
+import SurveysTab from "./SurveysTab.jsx";
 import { api } from "../services/api.js";
 import { auth } from "../services/auth.js";
 import { pageTransition } from "../motion/variants.js";
@@ -22,6 +24,8 @@ const TAB_TITLES = {
   marketplace: "Marketplace Oversight",
   suppliers: "Supplier Directory",
   community: "Rentals & Seeds",
+  prices: "Market Prices",
+  surveys: "Farmer Surveys",
   ads: "Ad Scheduler",
 };
 
@@ -70,6 +74,8 @@ export default function CommandCenterPage() {
             {activeTab === "marketplace" && <MarketplaceOversightTab />}
             {activeTab === "suppliers" && <SupplierManagementTab />}
             {activeTab === "community" && <CommunityListingsTab />}
+            {activeTab === "prices" && <PricesTab />}
+            {activeTab === "surveys" && <SurveysTab />}
             {activeTab === "ads" && <AdSchedulerTab />}
           </motion.div>
         </AnimatePresence>

@@ -115,6 +115,7 @@ export default function AdSchedulerTab() {
               )}
 
               <div className="flex items-center justify-between text-xs font-mono text-ink-400 mb-4 mt-3 pt-3 border-t border-slate-50">
+                <span>{ad.emoji && !ad.bannerImageUrl ? `${ad.emoji} text ad · ` : ""}{(ad.placements || ["marketplace"]).join(", ")}</span>
                 <span>{ad.impressions} impressions</span>
                 <span>{ad.clicks} clicks</span>
               </div>
