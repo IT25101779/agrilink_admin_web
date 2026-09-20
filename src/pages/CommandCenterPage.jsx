@@ -12,6 +12,9 @@ import HeatmapTab from "./HeatmapTab.jsx";
 import ChatModerationTab from "./ChatModerationTab.jsx";
 import PricesTab from "./PricesTab.jsx";
 import SurveysTab from "./SurveysTab.jsx";
+import SafetyTab from "./SafetyTab.jsx";
+import HelpNetworkTab from "./HelpNetworkTab.jsx";
+import HealthTab from "./HealthTab.jsx";
 import { api } from "../services/api.js";
 import { auth } from "../services/auth.js";
 import { pageTransition } from "../motion/variants.js";
@@ -26,6 +29,9 @@ const TAB_TITLES = {
   community: "Rentals & Seeds",
   prices: "Market Prices",
   surveys: "Farmer Surveys",
+  safety: "Trust & Safety",
+  network: "Help Network",
+  health: "System & Impact",
   ads: "Ad Scheduler",
 };
 
@@ -76,6 +82,9 @@ export default function CommandCenterPage() {
             {activeTab === "community" && <CommunityListingsTab />}
             {activeTab === "prices" && <PricesTab />}
             {activeTab === "surveys" && <SurveysTab />}
+            {activeTab === "safety" && <SafetyTab />}
+            {activeTab === "network" && <HelpNetworkTab />}
+            {activeTab === "health" && <HealthTab />}
             {activeTab === "ads" && <AdSchedulerTab />}
           </motion.div>
         </AnimatePresence>

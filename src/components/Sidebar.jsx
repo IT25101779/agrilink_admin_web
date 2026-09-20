@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { LayoutDashboard, Receipt, Megaphone, LogOut, Sprout, Store, Handshake, TrendingUp, Flame, MessagesSquare, LineChart, ClipboardList } from "lucide-react";
+import { LayoutDashboard, Receipt, Megaphone, LogOut, Sprout, Store, Handshake, TrendingUp, Flame, MessagesSquare, LineChart, ClipboardList, ShieldAlert, LifeBuoy, Activity } from "lucide-react";
 import { auth } from "../services/auth.js";
 
 const TABS = [
@@ -12,6 +12,9 @@ const TABS = [
   { id: "community", label: "Rentals & Seeds", icon: Handshake },
   { id: "prices", label: "Market Prices", icon: LineChart },
   { id: "surveys", label: "Farmer Surveys", icon: ClipboardList },
+  { id: "safety", label: "Trust & Safety", icon: ShieldAlert },
+  { id: "network", label: "Help Network", icon: LifeBuoy },
+  { id: "health", label: "System & Impact", icon: Activity },
   { id: "ads", label: "Ad Scheduler", icon: Megaphone },
 ];
 

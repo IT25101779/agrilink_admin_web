@@ -6,6 +6,17 @@
 export const BASE_URL = "https://agrilink-backend.vercel.app/api";
 // export const BASE_URL = "http://localhost:5000/api";
 
+import { auth } from "./auth.js";
+
+// Every request carries the login token automatically (the server now requires it).
+const _nativeFetch = window.fetch.bind(window);
+function fetch(url, options = {}) {
+  const token = auth.getSession()?.token;
+  const headers = { ...(options.headers || {}) };
+  if (token && !headers.Authorization && !/\/auth\/(login|register)/.test(String(url))) headers.Authorization = `Bearer ${token}`;
+  return _nativeFetch(url, { ...options, headers });
+}
+
 async function handleResponse(response) {
   try {
     return await response.json();
@@ -220,5 +231,14 @@ export const api = {
       headers: authHeaders(token),
     });
     return handleResponse(response);
+  },
+
+  // ---- generic call (used by the newer trust & safety / help-network / health tabs) ----
+  async call(token, method, path, body) {
+    return handleResponse(await fetch(`${BASE_URL}${path}`, { method, headers: authHeaders(token), body: body ? JSON.stringify(body) : undefined }));
+  },
+  async photoBlobUrl(token, id) {
+    const r = await fetch(`${BASE_URL}/admin/photos/${id}`, { headers: authHeaders(token) });
+    return r.ok ? URL.createObjectURL(await r.blob()) : null;
   },
 };
