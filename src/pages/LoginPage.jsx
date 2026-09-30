@@ -36,7 +36,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="font-display text-4xl font-semibold text-white">AgriLink AI</h1>
+          <h1 className="font-display text-4xl font-semibold text-white">ගොවි Tech</h1>
           <p className="text-slate-100/50 mt-2 font-body tracking-wide text-sm uppercase">Admin Command Center</p>
         </div>
 

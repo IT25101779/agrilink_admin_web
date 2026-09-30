@@ -28,7 +28,7 @@ export default function Sidebar({ activeTab, onTabChange, onLogout }) {
           <div className="w-9 h-9 rounded-lg bg-indigo-500/20 flex items-center justify-center">
             <Sprout size={18} className="text-indigo-400" />
           </div>
-          <h1 className="font-display text-xl font-semibold">AgriLink AI</h1>
+          <h1 className="font-display text-xl font-semibold">ගොවි Tech</h1>
         </div>
         <p className="text-xs text-indigo-400 mt-2 tracking-wide uppercase pl-0.5">Command Center</p>
       </div>
