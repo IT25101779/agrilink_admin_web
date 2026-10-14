@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { api } from "../services/api.js";
 import { auth } from "../services/auth.js";
 
-const KINDS = ["agrarian_service_centre", "extension_officer", "cooperative", "research_station", "government_office", "other"];
+const KINDS = ["agrarian_service_centre", "extension_officer", "cooperative", "research_station", "government_office", "agriculture_officer", "development_officer", "divisional_secretariat", "other"];
 const DISTRICTS = ["Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"];
 const Card = ({ children }) => <div className="bg-white rounded-2xl border border-slate-100 p-5">{children}</div>;
 const inp = "border border-slate-200 rounded-lg px-3 py-1.5 text-sm";
