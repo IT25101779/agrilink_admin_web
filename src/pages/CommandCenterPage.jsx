@@ -15,6 +15,7 @@ import SurveysTab from "./SurveysTab.jsx";
 import SafetyTab from "./SafetyTab.jsx";
 import HelpNetworkTab from "./HelpNetworkTab.jsx";
 import HealthTab from "./HealthTab.jsx";
+import ProfitTab from "./ProfitTab.jsx";
 import { api } from "../services/api.js";
 import { auth } from "../services/auth.js";
 import { pageTransition } from "../motion/variants.js";
@@ -32,6 +33,7 @@ const TAB_TITLES = {
   safety: "Trust & Safety",
   network: "Help Network",
   health: "System & Impact",
+  profit: "Profit & Data Partners",
   ads: "Ad Scheduler",
 };
 
@@ -85,6 +87,7 @@ export default function CommandCenterPage() {
             {activeTab === "safety" && <SafetyTab />}
             {activeTab === "network" && <HelpNetworkTab />}
             {activeTab === "health" && <HealthTab />}
+            {activeTab === "profit" && <ProfitTab />}
             {activeTab === "ads" && <AdSchedulerTab />}
           </motion.div>
         </AnimatePresence>

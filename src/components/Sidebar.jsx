@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { LayoutDashboard, Receipt, Megaphone, LogOut, Sprout, Store, Handshake, TrendingUp, Flame, MessagesSquare, LineChart, ClipboardList, ShieldAlert, LifeBuoy, Activity } from "lucide-react";
+import { LayoutDashboard, Receipt, Megaphone, LogOut, Sprout, Store, Handshake, TrendingUp, Flame, MessagesSquare, LineChart, ClipboardList, ShieldAlert, LifeBuoy, Activity, Wallet } from "lucide-react";
 import { auth } from "../services/auth.js";
 
 const TABS = [
@@ -15,6 +15,7 @@ const TABS = [
   { id: "safety", label: "Trust & Safety", icon: ShieldAlert },
   { id: "network", label: "Help Network", icon: LifeBuoy },
   { id: "health", label: "System & Impact", icon: Activity },
+  { id: "profit", label: "Profit & Data Partners", icon: Wallet },
   { id: "ads", label: "Ad Scheduler", icon: Megaphone },
 ];
 
@@ -28,7 +29,7 @@ export default function Sidebar({ activeTab, onTabChange, onLogout }) {
           <div className="w-9 h-9 rounded-lg bg-indigo-500/20 flex items-center justify-center">
             <Sprout size={18} className="text-indigo-400" />
           </div>
-          <h1 className="font-display text-xl font-semibold">ගොවි Tech</h1>
+          <h1 className="font-display text-xl font-semibold">AgriLink AI</h1>
         </div>
         <p className="text-xs text-indigo-400 mt-2 tracking-wide uppercase pl-0.5">Command Center</p>
       </div>
