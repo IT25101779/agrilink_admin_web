@@ -13,6 +13,7 @@ import ChatModerationTab from "./ChatModerationTab.jsx";
 import PricesTab from "./PricesTab.jsx";
 import SurveysTab from "./SurveysTab.jsx";
 import SafetyTab from "./SafetyTab.jsx";
+import AccountApprovalsTab from "./AccountApprovalsTab.jsx";
 import HelpNetworkTab from "./HelpNetworkTab.jsx";
 import HealthTab from "./HealthTab.jsx";
 import ProfitTab from "./ProfitTab.jsx";
@@ -30,6 +31,7 @@ const TAB_TITLES = {
   community: "Rentals & Seeds",
   prices: "Market Prices",
   surveys: "Farmer Surveys",
+  approvals: "Account Approvals",
   safety: "Trust & Safety",
   network: "Help Network",
   health: "System & Impact",
@@ -84,6 +86,7 @@ export default function CommandCenterPage() {
             {activeTab === "community" && <CommunityListingsTab />}
             {activeTab === "prices" && <PricesTab />}
             {activeTab === "surveys" && <SurveysTab />}
+            {activeTab === "approvals" && <AccountApprovalsTab />}
             {activeTab === "safety" && <SafetyTab />}
             {activeTab === "network" && <HelpNetworkTab />}
             {activeTab === "health" && <HealthTab />}

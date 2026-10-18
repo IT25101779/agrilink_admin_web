@@ -30,11 +30,34 @@ function authHeaders(token) {
 }
 
 export const api = {
-  async register({ fullName, email, phone, password }) {
+  async register({ fullName, email, phone, password, adminCode }) {
     const response = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fullName, email, phone, password, role: "admin" }),
+      // NOTE: adminCode was previously missing from this request entirely,
+      // which meant admin sign-up always failed with "Incorrect admin
+      // sign-up code" even when the right code was typed in. Fixed here.
+      body: JSON.stringify({ fullName, email, phone, password, role: "admin", adminCode }),
+    });
+    return handleResponse(response);
+  },
+
+  // Step 1 of registration: validates the details (and the admin sign-up
+  // code) and emails a 6-digit confirmation code. Nothing is created yet.
+  async registerStart({ fullName, email, phone, password, adminCode }) {
+    const response = await fetch(`${BASE_URL}/auth/register-start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fullName, email, phone, password, role: "admin", adminCode }),
+    });
+    return handleResponse(response);
+  },
+
+  async registerVerify({ email, otp }) {
+    const response = await fetch(`${BASE_URL}/auth/register-verify`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp }),
     });
     return handleResponse(response);
   },
