@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { api } from "../services/api.js";
 import { auth } from "../services/auth.js";
 
-const KINDS = ["agrarian_service_centre", "extension_officer", "cooperative", "research_station", "government_office", "agriculture_officer", "development_officer", "divisional_secretariat", "other"];
+const KINDS = ["agrarian_service_centre", "extension_officer", "cooperative", "research_station", "government_office", "other"];
 const DISTRICTS = ["Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"];
 const Card = ({ children }) => <div className="bg-white rounded-2xl border border-slate-100 p-5">{children}</div>;
 const inp = "border border-slate-200 rounded-lg px-3 py-1.5 text-sm";
@@ -68,7 +68,59 @@ function SupportPrices({ token }) {
   );
 }
 
+function EconomicCentres({ token }) {
+  const [rows, setRows] = useState([]);
+  const [open, setOpen] = useState("");
+  const [f, setF] = useState({ number: "", name: "", deals: "", phone: "" });
+  const load = useCallback(() => api.call(token, "GET", "/economic-centres").then((r) => r.success && setRows(r.data)), [token]);
+  useEffect(() => { load(); }, [load]);
+  const editCentre = async (c) => {
+    const phone = window.prompt(`Phone number for ${c.name}`, c.phone); if (phone === null) return;
+    const address = window.prompt("Address", c.address); if (address === null) return;
+    const hours = window.prompt("Opening hours", c.hours); if (hours === null) return;
+    await api.call(token, "PATCH", `/admin/economic-centres/${c.id}`, { phone, address, hours, isSample: false }); load();
+  };
+  const addStall = async (c) => {
+    const r = await api.call(token, "POST", `/admin/economic-centres/${c.id}/stalls`, { number: Number(f.number), name: f.name, deals: f.deals, phone: f.phone });
+    if (!r.success) return alert(r.message); setF({ number: "", name: "", deals: "", phone: "" }); load();
+  };
+  const editStall = async (c, s) => {
+    const phone = window.prompt(`Phone for store ${s.number} (${s.name})`, s.phone); if (phone === null) return;
+    await api.call(token, "POST", `/admin/economic-centres/${c.id}/stalls`, { ...s, phone }); load();
+  };
+  const delStall = async (c, s) => { if (window.confirm(`Delete store ${s.number} ${s.name}?`)) { await api.call(token, "DELETE", `/admin/economic-centres/${c.id}/stalls/${s.number}`); load(); } };
+  return (
+    <Card>
+      <h3 className="font-display text-lg font-semibold mb-3">Economic centres & stores</h3>
+      <p className="text-xs bg-amber-50 border border-amber-200 text-amber-800 rounded-lg px-3 py-2 mb-3">Farmers see these on the Logistics tab. Store names are demo data - enter real phone numbers only with the owner's permission.</p>
+      <div className="divide-y">{rows.map((c) => (
+        <div key={c.id} className="py-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex-1"><b>{c.name}</b>{c.featured ? " ⭐" : ""} <span className="text-xs text-ink-400">{c.district} · {c.stallCount} stores · {c.phone || "no phone yet"}</span></div>
+            <button onClick={() => editCentre(c)} className="text-xs text-indigo-600">Edit contact</button>
+            <button onClick={() => setOpen(open === c.id ? "" : c.id)} className="text-xs text-indigo-600">{open === c.id ? "Hide stores" : "Stores"}</button>
+          </div>
+          {open === c.id && (
+            <div className="mt-2">
+              <div className="grid sm:grid-cols-4 gap-2">
+                <input className={inp} placeholder="Store no." value={f.number} onChange={(e) => setF({ ...f, number: e.target.value })} />
+                <input className={inp} placeholder="Store name" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} />
+                <input className={inp} placeholder="Sells (comma separated)" value={f.deals} onChange={(e) => setF({ ...f, deals: e.target.value })} />
+                <input className={inp} placeholder="Phone" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} />
+              </div>
+              <button onClick={() => addStall(c)} className="mt-2 bg-indigo-600 text-white rounded-lg px-4 py-1.5 text-sm">Add / replace store</button>
+              <div className="mt-2 max-h-72 overflow-y-auto divide-y">{c.stalls.map((s) => (
+                <div key={s.number} className="py-1 flex items-center gap-2 text-sm"><span className="w-12 font-semibold">{s.number}</span><span className="flex-1">{s.name} <span className="text-xs text-ink-400">{s.phone}</span></span><button onClick={() => editStall(c, s)} className="text-xs text-indigo-600">Phone</button><button onClick={() => delStall(c, s)} className="text-xs text-red-600">Delete</button></div>
+              ))}</div>
+            </div>
+          )}
+        </div>
+      ))}</div>
+    </Card>
+  );
+}
+
 export default function HelpNetworkTab() {
   const token = auth.getSession().token;
-  return <div className="space-y-6"><Offices token={token} /><Officers token={token} /><SupportPrices token={token} /></div>;
+  return <div className="space-y-6"><Offices token={token} /><EconomicCentres token={token} /><Officers token={token} /><SupportPrices token={token} /></div>;
 }
